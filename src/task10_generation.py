@@ -45,10 +45,17 @@ def reorder_for_llm(chunks: list[dict]) -> list[dict]:
     return front + back[::-1]
 
 
-def format_context(chunks: list[dict]) -> str:
-    """Tạo context có title và source label."""
+def format_context(chunks: list[dict], source_ids: list[str] | None = None) -> str:
+    """Tạo context có title và source label.
+
+    ``source_ids`` là thứ tự của ``sources`` trả cho người dùng (theo score);
+    nhãn [S<n>] lấy theo vị trí trong đó để citation map đúng về sources dù
+    chunks đã được reorder.
+    """
+    order = source_ids or [chunk["id"] for chunk in chunks]
     parts: list[str] = []
-    for index, chunk in enumerate(chunks, 1):
+    for chunk in chunks:
+        index = order.index(chunk["id"]) + 1
         metadata = chunk["metadata"]
         parts.append(
             f"[S{index} | Title: {metadata['title']} | "
@@ -78,7 +85,9 @@ def call_llm(system_prompt: str, user_message: str) -> str:
         from google import genai
         from google.genai import types
 
-        response = genai.Client(api_key=os.getenv("GEMINI_API_KEY")).models.generate_content(
+        # Giữ biến client sống suốt request; client tạm thời có thể bị GC đóng.
+        client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+        response = client.models.generate_content(
             model=LLM_MODEL,
             contents=user_message,
             config=types.GenerateContentConfig(
@@ -112,32 +121,43 @@ def generate_with_citation(query: str, top_k: int = TOP_K) -> dict:
     if not chunks:
         return {"answer": SAFE_REFUSAL, "sources": [], "retrieval_source": "none"}
 
-    reordered = reorder_for_llm(chunks)
-    context = format_context(reordered)
-    user_message = f"Context:\n{context}\n\nQuestion: {query}"
-    try:
-        answer = call_llm(SYSTEM_PROMPT, user_message)
-    except Exception:
-        return {"answer": SAFE_REFUSAL, "sources": reordered, "retrieval_source": "none"}
-
+    answer = answer_from_chunks(query, chunks)
     valid_citations = {
         int(number)
         for number in re.findall(r"\[S(\d+)\]", answer)
-        if 1 <= int(number) <= len(reordered)
+        if 1 <= int(number) <= len(chunks)
     }
-    if not answer or not valid_citations:
-        answer = SAFE_REFUSAL
-        retrieval_source = "none"
-    else:
-        retrieval_source = (
-            "pageindex" if chunks[0]["retrieval_method"] == "pageindex" else "hybrid"
-        )
+    if not answer or SAFE_REFUSAL in answer or not valid_citations:
+        return {"answer": SAFE_REFUSAL, "sources": [], "retrieval_source": "none"}
     return {
         "answer": answer,
-        "sources": reordered,
-        "retrieval_source": retrieval_source,
+        # Giữ thứ tự theo score để [S<n>] ứng với sources[n-1].
+        "sources": chunks,
+        "retrieval_source": (
+            "pageindex" if chunks[0]["retrieval_method"] == "pageindex" else "hybrid"
+        ),
     }
+
+
+def answer_from_chunks(query: str, chunks: list[dict]) -> str:
+    """Reorder, format context và gọi LLM; lỗi provider trả chuỗi rỗng."""
+    context = format_context(reorder_for_llm(chunks), [chunk["id"] for chunk in chunks])
+    user_message = f"Context:\n{context}\n\nQuestion: {query}"
+    try:
+        return call_llm(SYSTEM_PROMPT, user_message)
+    except Exception as error:
+        print(f"LLM provider error: {error}")
+        return ""
 
 
 if __name__ == "__main__":
-    print(generate_with_citation("test query"))
+    import sys
+
+    question = " ".join(sys.argv[1:]) or "Nhà hát lớn Hà Nội được xây dựng vào năm nào?"
+    result = generate_with_citation(question)
+    print(f"Q: {question}\n\n{result['answer']}\n\nretrieval_source: {result['retrieval_source']}")
+    for number, source in enumerate(result["sources"], 1):
+        print(
+            f"[S{number}] {source['metadata']['title']} · {source['retrieval_method']} "
+            f"· score={source['score']:.4f} · {source['id']}"
+        )

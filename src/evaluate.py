@@ -23,7 +23,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from .task10_generation import LLM_MODEL, SYSTEM_PROMPT, call_llm, format_context, reorder_for_llm
+from .task10_generation import LLM_MODEL, SAFE_REFUSAL, answer_from_chunks
 from .task4_chunking_indexing import EMBEDDING_MODEL
 from .task5_semantic_search import semantic_search
 from .task9_retrieval_pipeline import SCORE_THRESHOLD, retrieve
@@ -37,13 +37,6 @@ GOLDEN_PATH = EVALUATION_DIR / "golden_dataset.json"
 RAW_RESULTS_PATH = EVALUATION_DIR / "raw_results.json"
 REPORT_PATH = EVALUATION_DIR / "RESULT.md"
 TOP_K = 5
-
-
-def answer_from_chunks(question: str, chunks: list[dict]) -> tuple[str, list[dict]]:
-    ordered = reorder_for_llm(chunks)
-    context = format_context(ordered)
-    prompt = f"Context:\n{context}\n\nQuestion: {question}"
-    return call_llm(SYSTEM_PROMPT, prompt), ordered
 
 
 def retrieve_config(question: str, config: str) -> list[dict]:
@@ -76,7 +69,9 @@ async def build_metrics():
         from ragas.embeddings import OpenAIEmbeddings
 
         # Ragas metric.ascore() cần async client cho cả judge lẫn embeddings.
-        client = AsyncOpenAI(api_key=os.environ["OPENAI_API_KEY"])
+        client = AsyncOpenAI(
+            api_key=os.environ["OPENAI_API_KEY"], timeout=120, max_retries=5
+        )
         judge = llm_factory(LLM_MODEL, provider="openai", client=client)
         if embedding_provider == "openai":
             embeddings = OpenAIEmbeddings(client=client, model=EMBEDDING_MODEL)
@@ -128,6 +123,21 @@ async def score_case(metrics, case: dict, answer: str, contexts: list[str]) -> d
     }
 
 
+async def score_case_with_retry(
+    metrics, case: dict, answer: str, contexts: list[str], attempts: int = 3
+) -> dict:
+    """Chấm lại khi judge timeout; một lỗi mạng không được làm hỏng cả lượt chạy."""
+    for attempt in range(1, attempts + 1):
+        try:
+            return await score_case(metrics, case, answer, contexts)
+        except Exception as error:
+            if attempt == attempts:
+                raise
+            print(f"Scoring failed ({type(error).__name__}), retry {attempt}/{attempts - 1}")
+            await asyncio.sleep(10 * attempt)
+    return {}
+
+
 async def evaluate() -> list[dict]:
     golden = json.loads(GOLDEN_PATH.read_text(encoding="utf-8"))
     metrics = await build_metrics()
@@ -136,8 +146,12 @@ async def evaluate() -> list[dict]:
         for index, case in enumerate(golden, 1):
             started = time.perf_counter()
             chunks = retrieve_config(case["question"], config)
-            answer, ordered = answer_from_chunks(case["question"], chunks)
-            scores = await score_case(
+            # Chấm trên thứ tự retrieval gốc: context precision phụ thuộc thứ hạng.
+            ordered = chunks
+            answer = answer_from_chunks(case["question"], chunks) or SAFE_REFUSAL
+            # Latency chỉ gồm retrieval + generation, không tính thời gian judge chấm.
+            latency = time.perf_counter() - started
+            scores = await score_case_with_retry(
                 metrics, case, answer, [item["content"] for item in ordered]
             )
             row = {
@@ -147,7 +161,7 @@ async def evaluate() -> list[dict]:
                 "expected_answer": case["expected_answer"],
                 "answer": answer,
                 "source_ids": [item["id"] for item in ordered],
-                "latency_seconds": round(time.perf_counter() - started, 3),
+                "latency_seconds": round(latency, 3),
                 **scores,
             }
             rows.append(row)
@@ -231,11 +245,11 @@ def write_report(rows: list[dict], dataset_size: int) -> None:
 | Corpus version/commit | {_git_commit()} |
 | Golden dataset size | {dataset_size} |
 | `top_k` | {TOP_K} |
-| Fallback threshold and calibration | {SCORE_THRESHOLD}; cần lưu riêng các query calibration khi đổi corpus |
+| Fallback threshold and calibration | {SCORE_THRESHOLD} — best dense cosine của 15 câu golden: min 0.471 (Ba Vì–Suối Hai), max 0.737; 5 câu ngoài domain (nấu ăn, bitcoin, bóng đá, Python, thời tiết Paris): 0.254–0.421. Threshold đặt giữa hai nhóm. |
 
 ## Configurations
 
-- **Config A — dense-only:** embedding + cosine search, không BM25/RRF.
+- **Config A — dense-only:** `{EMBEDDING_MODEL}` + cosine search, không BM25/RRF.
 - **Config B — hybrid + RRF:** dense và BM25, fusion RRF một lần; PageIndex khi dense score dưới threshold.
 
 Hai cấu hình dùng cùng golden dataset, generator, evaluator, prompt và `top_k`.

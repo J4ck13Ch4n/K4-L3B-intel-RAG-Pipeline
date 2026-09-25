@@ -23,7 +23,9 @@ from .task8_pageindex_vectorless import pageindex_search
 
 load_dotenv()
 
-SCORE_THRESHOLD = float(os.getenv("SCORE_THRESHOLD") or "0.3")
+# Hiệu chỉnh với text-embedding-3-small: best dense cosine của 15 câu golden
+# nằm trong 0.471–0.737, của query ngoài domain nằm trong 0.254–0.421.
+SCORE_THRESHOLD = float(os.getenv("SCORE_THRESHOLD") or "0.45")
 DEFAULT_TOP_K = 5
 
 
@@ -59,5 +61,9 @@ def retrieve(
 
 
 if __name__ == "__main__":
-    for result in retrieve("test query", top_k=3):
-        print(result)
+    for query in ("Nhà hát lớn Hà Nội được xây dựng năm nào?", "Tỷ giá bitcoin hôm nay?"):
+        dense = semantic_search(query, top_k=1)
+        best = dense[0]["score"] if dense else 0.0
+        print(f"\n{query}\nbest dense cosine={best:.3f} (threshold={SCORE_THRESHOLD})")
+        for result in retrieve(query, top_k=3):
+            print(f"  {result['retrieval_method']:9} {result['score']:.4f}  {result['id']}")

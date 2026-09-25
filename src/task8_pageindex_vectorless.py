@@ -8,111 +8,158 @@ Hướng dẫn:
     4. Parse kết quả thành SearchResult có method pageindex.
 
 PageIndex là dịch vụ ngoài: cần timeout và xử lý lỗi để pipeline không crash.
+
+API của SDK pageindex==0.2.8 (chỉ nhận PDF):
+    PageIndexClient(api_key)
+    submit_document(path)       -> {"doc_id": ...}
+    is_retrieval_ready(doc_id)  -> bool
+    submit_query(doc_id, query) -> {"retrieval_id": ...}
+    get_retrieval(retrieval_id) -> {"status": ..., "retrieved_nodes": [...]}
+
+Response thật (09/2026): mỗi node có "id", "title" và "relevant_contents" dạng
+list lồng list các {"section_title", "physical_index", "relevant_content"}.
+Endpoint retrieval đã được PageIndex đánh dấu deprecated (khuyên dùng chat API)
+nhưng vẫn hoạt động.
+
+Chạy một lần để upload (PageIndex cần vài phút xử lý mỗi PDF):
+    python -m src.task8_pageindex_vectorless
 """
 
 import json
 import os
-import re
+import time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from dotenv import load_dotenv
+
+from .task1_collect_legal_docs import LEGAL_SOURCES
 
 
 load_dotenv()
 
 PAGEINDEX_API_KEY = os.getenv("PAGEINDEX_API_KEY", "")
 STANDARDIZED_DIR = Path(__file__).parent.parent / "data" / "standardized"
+LEGAL_DIR = Path(__file__).parent.parent / "data" / "landing" / "legal"
 CACHE_PATH = Path(__file__).parent.parent / "pageindex_doc_ids.json"
-WORKSPACE_DIR = Path(__file__).parent.parent / ".pageindex_workspace"
+
+QUERY_TIMEOUT_SECONDS = 30
+POLL_INTERVAL_SECONDS = 1.5
+
+
+def _client():
+    from pageindex import PageIndexClient
+
+    return PageIndexClient(api_key=PAGEINDEX_API_KEY)
 
 
 def upload_documents() -> None:
-    """Upload tài liệu và lưu document IDs để tái sử dụng."""
+    """Upload PDF legal và lưu mapping filename -> doc_id để tái sử dụng."""
     if not PAGEINDEX_API_KEY:
         raise RuntimeError("Thiếu PAGEINDEX_API_KEY")
-    from pageindex import PageIndexClient
-
-    WORKSPACE_DIR.mkdir(parents=True, exist_ok=True)
-    client = PageIndexClient(api_key=PAGEINDEX_API_KEY, workspace=str(WORKSPACE_DIR))
+    client = _client()
     cache = _load_cache()
-    for path in sorted(STANDARDIZED_DIR.rglob("*.md")):
-        source = path.relative_to(STANDARDIZED_DIR).as_posix()
-        if source in cache:
-            continue
-        document_id = client.index(str(path), mode="auto")
-        cache[source] = {"doc_id": document_id, "path": str(path)}
-        CACHE_PATH.write_text(
-            json.dumps(cache, ensure_ascii=False, indent=2), encoding="utf-8"
-        )
-        print(f"Indexed PageIndex: {source} -> {document_id}")
+    for path in sorted(LEGAL_DIR.glob("*.pdf")):
+        if path.name not in cache:
+            cache[path.name] = client.submit_document(str(path))["doc_id"]
+            CACHE_PATH.write_text(json.dumps(cache, indent=2), encoding="utf-8")
+            print(f"Uploaded: {path.name} -> {cache[path.name]}")
+    for filename, doc_id in cache.items():
+        ready = client.is_retrieval_ready(doc_id)
+        print(f"{filename}: {'ready' if ready else 'processing'}")
+
+
+def _query_document(client, doc_id: str, query: str, deadline: float) -> list[dict]:
+    retrieval_id = client.submit_query(doc_id, query)["retrieval_id"]
+    while time.monotonic() < deadline:
+        response = client.get_retrieval(retrieval_id)
+        status = response.get("status")
+        if status == "completed":
+            return response.get("retrieved_nodes") or []
+        if status == "failed":
+            return []
+        time.sleep(POLL_INTERVAL_SECONDS)
+    return []
+
+
+def _node_text(node: dict) -> str:
+    """Gộp relevant_content; API trả list lồng list: [[{"relevant_content": ...}], ...]."""
+
+    def walk(value):
+        if isinstance(value, list):
+            for item in value:
+                yield from walk(item)
+        elif isinstance(value, dict):
+            yield str(value.get("relevant_content") or "")
+        elif isinstance(value, str):
+            yield value
+
+    texts = (text.strip() for text in walk(node.get("relevant_contents") or []))
+    return "\n\n".join(text for text in texts if text)
 
 
 def pageindex_search(query: str, top_k: int = 5) -> list[dict]:
-    """Trả về pageindex SearchResult."""
+    """Trả về pageindex SearchResult; score giảm dần theo thứ tự PageIndex trả về."""
     if top_k <= 0 or not query.strip() or not PAGEINDEX_API_KEY:
         return []
     cache = _load_cache()
     if not cache:
-        upload_documents()
-        cache = _load_cache()
+        return []
 
-    from pageindex import PageIndexClient
+    client = _client()
+    deadline = time.monotonic() + QUERY_TIMEOUT_SECONDS
+    with ThreadPoolExecutor(max_workers=len(cache)) as pool:
+        futures = {
+            filename: pool.submit(_query_document, client, doc_id, query, deadline)
+            for filename, doc_id in cache.items()
+        }
+        nodes_by_file: dict[str, list[dict]] = {}
+        for filename, future in futures.items():
+            try:
+                nodes_by_file[filename] = future.result(timeout=QUERY_TIMEOUT_SECONDS + 5)
+            except Exception as error:
+                print(f"PageIndex query failed for {filename}: {error}")
 
-    client = PageIndexClient(api_key=PAGEINDEX_API_KEY, workspace=str(WORKSPACE_DIR))
-    query_terms = set(_tokenize(query))
-    candidates: list[dict] = []
-    for source, entry in cache.items():
-        structure = client.get_document_structure(entry["doc_id"])
-        if isinstance(structure, str):
-            structure = json.loads(structure)
-        for node_index, node in enumerate(_flatten_nodes(structure)):
-            content = str(node.get("text") or node.get("summary") or "").strip()
-            if not content:
+    # Xen kẽ node của các tài liệu để một văn bản dài không chiếm hết top_k.
+    results: list[dict] = []
+    seen: set[str] = set()
+    for rank in range(max((len(nodes) for nodes in nodes_by_file.values()), default=0)):
+        for filename, nodes in nodes_by_file.items():
+            if rank >= len(nodes):
                 continue
-            title = str(node.get("title") or Path(source).stem)
-            terms = set(_tokenize(f"{title} {content}"))
-            overlap = len(query_terms & terms) / max(len(query_terms), 1)
-            if overlap <= 0:
+            node = nodes[rank]
+            content = _node_text(node)
+            node_id = node.get("id") or node.get("node_id") or rank
+            item_id = f"pageindex::{cache[filename]}::{node_id}"
+            if not content or item_id in seen:
                 continue
-            candidates.append(
+            seen.add(item_id)
+            title = Path(filename).stem.replace("-", " ").title()
+            results.append(
                 {
-                    "id": f"pageindex::{entry['doc_id']}::{node.get('node_id', node_index)}",
+                    "id": item_id,
                     "content": content,
-                    "score": float(overlap),
+                    "score": 0.0,
                     "metadata": {
-                        "source": source,
-                        "title": title,
-                        "doc_type": "legal" if source.startswith("legal/") else "news",
-                        "url": "",
-                        "chunk_index": node_index,
+                        "source": filename,
+                        "title": f"{title} — {node['title']}" if node.get("title") else title,
+                        "doc_type": "legal",
+                        "url": LEGAL_SOURCES.get(filename),
+                        "chunk_index": len(results),
                     },
                     "retrieval_method": "pageindex",
                 }
             )
-    candidates.sort(key=lambda item: item["score"], reverse=True)
-    return candidates[:top_k]
+    results = results[:top_k]
+    for rank, item in enumerate(results, 1):
+        item["score"] = 1.0 / rank
+    return results
 
 
 def _load_cache() -> dict:
     if not CACHE_PATH.exists():
         return {}
     return json.loads(CACHE_PATH.read_text(encoding="utf-8"))
-
-
-def _tokenize(text: str) -> list[str]:
-    return re.findall(r"[\wÀ-ỹ]+", text.casefold(), flags=re.UNICODE)
-
-
-def _flatten_nodes(value):
-    if isinstance(value, list):
-        for item in value:
-            yield from _flatten_nodes(item)
-    elif isinstance(value, dict):
-        if any(key in value for key in ("title", "text", "summary")):
-            yield value
-        for key in ("nodes", "children"):
-            if key in value:
-                yield from _flatten_nodes(value[key])
 
 
 if __name__ == "__main__":

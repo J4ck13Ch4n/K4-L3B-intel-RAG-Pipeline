@@ -44,4 +44,11 @@ def rerank_rrf(
 
 
 if __name__ == "__main__":
-    print("Implement rerank_rrf, then run contract tests.")
+    from .task5_semantic_search import semantic_search
+    from .task6_lexical_search import lexical_search
+
+    query = "Nhà hát lớn Hà Nội được xây dựng năm nào?"
+    dense = semantic_search(query, top_k=10)
+    sparse = lexical_search(query, top_k=10)
+    for result in rerank_rrf([dense, sparse], top_k=5):
+        print(f"{result['score']:.4f}  {result['id']}")

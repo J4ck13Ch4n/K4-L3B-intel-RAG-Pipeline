@@ -102,5 +102,5 @@ def lexical_search(query: str, top_k: int = 10) -> list[dict]:
 
 
 if __name__ == "__main__":
-    for result in lexical_search("test query", top_k=3):
-        print(result)
+    for result in lexical_search("Nhà hát lớn Hà Nội được xây dựng năm nào?", top_k=3):
+        print(f"{result['score']:.4f}  {result['id']}")

@@ -13,6 +13,7 @@ chạy lại pipeline không tạo dữ liệu trùng. Task 5 phải dùng chung
 
 import os
 import re
+import time
 from functools import lru_cache
 from pathlib import Path
 
@@ -23,7 +24,12 @@ load_dotenv()
 
 
 STANDARDIZED_DIR = Path(__file__).parent.parent / "data" / "standardized"
-CHROMA_DIR = Path(__file__).parent.parent / "chroma_db"
+# Trên WSL nên đặt CHROMA_DIR trong filesystem Linux (vd. ~/.cache/hanoi-rag/chroma_db):
+# SQLite của Chroma dễ hỏng/khóa file khi ghi qua /mnt/<ổ Windows>.
+CHROMA_DIR = Path(
+    os.path.expanduser(os.getenv("CHROMA_DIR") or "")
+    or Path(__file__).parent.parent / "chroma_db"
+)
 
 # Giải thích lựa chọn tham số trong báo cáo nhóm.
 CHUNK_SIZE = 500
@@ -35,7 +41,11 @@ EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "BAAI/bge-m3")
 _DEFAULT_DIM = "768" if EMBEDDING_PROVIDER == "gemini" else "1024"
 EMBEDDING_DIM = int(os.getenv("EMBEDDING_DIM", _DEFAULT_DIM))
 
-COLLECTION_NAME = "rag_documents"
+# Mỗi cấu hình embedding một collection riêng để đổi provider/model không trộn
+# vector khác không gian (hoặc khác số chiều) vào cùng một index.
+COLLECTION_NAME = "rag_documents_" + re.sub(
+    r"[^a-zA-Z0-9]+", "-", f"{EMBEDDING_PROVIDER}-{EMBEDDING_MODEL}"
+).strip("-").lower()[:50]
 
 
 def embed_texts(texts: list[str]) -> list[list[float]]:
@@ -54,10 +64,9 @@ def embed_texts(texts: list[str]) -> list[list[float]]:
         response = OpenAI().embeddings.create(model=EMBEDDING_MODEL, input=texts)
         return [item.embedding for item in response.data]
     if provider == "gemini":
-        from google import genai
         from google.genai import types
 
-        response = genai.Client().models.embed_content(
+        response = _gemini_client().models.embed_content(
             model=EMBEDDING_MODEL,
             contents=texts,
             config=types.EmbedContentConfig(
@@ -74,6 +83,14 @@ def embed_texts(texts: list[str]) -> list[list[float]]:
     raise ValueError(f"EMBEDDING_PROVIDER không hỗ trợ: {EMBEDDING_PROVIDER}")
 
 
+@lru_cache(maxsize=1)
+def _gemini_client():
+    # Giữ tham chiếu tới client: client tạm thời bị GC đóng httpx giữa chừng.
+    from google import genai
+
+    return genai.Client()
+
+
 @lru_cache(maxsize=2)
 def _sentence_transformer(model_name: str):
     from sentence_transformers import SentenceTransformer
@@ -81,13 +98,23 @@ def _sentence_transformer(model_name: str):
     return SentenceTransformer(model_name)
 
 
-def get_collection():
-    """Mở Chroma collection dùng cosine distance."""
+@lru_cache(maxsize=2)
+def _chroma_client(path: str):
     import chromadb
 
+    return chromadb.PersistentClient(path=path)
+
+
+def get_collection():
+    """Mở Chroma collection dùng cosine distance."""
+    if CHROMA_DIR.exists() and not CHROMA_DIR.is_dir():
+        raise RuntimeError(
+            f"{CHROMA_DIR} tồn tại nhưng không đọc được như thư mục (thường do "
+            "SQLite hỏng trên /mnt của WSL). Xoá thư mục này hoặc đặt CHROMA_DIR "
+            "trong filesystem Linux, rồi chạy lại task4."
+        )
     CHROMA_DIR.mkdir(parents=True, exist_ok=True)
-    client = chromadb.PersistentClient(path=str(CHROMA_DIR))
-    return client.get_or_create_collection(
+    return _chroma_client(str(CHROMA_DIR)).get_or_create_collection(
         name=COLLECTION_NAME,
         metadata={"hnsw:space": "cosine"},
     )
@@ -186,13 +213,31 @@ def _fallback_split_text(text: str) -> list[str]:
     return chunks
 
 
+def _embed_with_retry(texts: list[str], max_attempts: int = 8) -> list[list[float]]:
+    """Gọi embed_texts, tự chờ khi provider trả 429 (quota free tier theo phút)."""
+    for attempt in range(1, max_attempts + 1):
+        try:
+            return embed_texts(texts)
+        except Exception as error:
+            message = str(error)
+            if attempt == max_attempts or not (
+                "429" in message or "RESOURCE_EXHAUSTED" in message
+            ):
+                raise
+            match = re.search(r"retry in ([\d.]+)s", message)
+            delay = float(match.group(1)) + 2 if match else min(15 * attempt, 65)
+            print(f"Rate limited, chờ {delay:.0f}s (lần {attempt}/{max_attempts})")
+            time.sleep(delay)
+    return []
+
+
 def embed_chunks(chunks: list[dict]) -> list[dict]:
     """Thêm embedding vào từng chunk."""
     batch_size = max(int(os.getenv("EMBEDDING_BATCH_SIZE", "32")), 1)
     texts = [chunk["content"] for chunk in chunks]
     vectors: list[list[float]] = []
     for start in range(0, len(texts), batch_size):
-        vectors.extend(embed_texts(texts[start : start + batch_size]))
+        vectors.extend(_embed_with_retry(texts[start : start + batch_size]))
         print(f"Embedded {min(start + batch_size, len(texts))}/{len(texts)} chunks")
     if len(vectors) != len(chunks):
         raise ValueError("Embedding provider trả sai số lượng vector")
@@ -223,12 +268,28 @@ def index_to_vectorstore(chunks: list[dict]) -> None:
 
 
 def run_pipeline() -> None:
-    """Chạy load, chunk, embed và index."""
+    """Chạy load, chunk, embed và index; chạy lại sẽ tiếp tục từ chỗ dừng."""
     documents = load_documents()
     chunks = chunk_documents(documents)
-    embedded_chunks = embed_chunks(chunks)
-    index_to_vectorstore(embedded_chunks)
-    print(f"Indexed {len(embedded_chunks)} chunks")
+    collection = get_collection()
+    existing = collection.get(include=["documents"])
+    indexed = dict(zip(existing["ids"], existing["documents"]))
+
+    # Xoá chunk không còn trong corpus (tài liệu bị xoá hoặc ngắn đi).
+    current_ids = {chunk["id"] for chunk in chunks}
+    stale_ids = [item_id for item_id in indexed if item_id not in current_ids]
+    if stale_ids:
+        collection.delete(ids=stale_ids)
+
+    pending = [chunk for chunk in chunks if indexed.get(chunk["id"]) != chunk["content"]]
+    print(f"{len(chunks)} chunks: {len(chunks) - len(pending)} đã index, {len(pending)} cần embed")
+
+    # Index theo từng nhóm nhỏ để lỗi quota giữa chừng không làm mất tiến độ.
+    batch_size = max(int(os.getenv("EMBEDDING_BATCH_SIZE", "32")), 1) * 4
+    for start in range(0, len(pending), batch_size):
+        index_to_vectorstore(embed_chunks(pending[start : start + batch_size]))
+        print(f"Indexed {min(start + batch_size, len(pending))}/{len(pending)} pending chunks")
+    print(f"Collection '{COLLECTION_NAME}' có {collection.count()} chunks")
 
 
 if __name__ == "__main__":
