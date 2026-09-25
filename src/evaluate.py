@@ -53,10 +53,6 @@ def retrieve_config(question: str, config: str) -> list[dict]:
 
 
 async def build_metrics():
-    if os.getenv("LLM_PROVIDER", "").lower() != "gemini":
-        raise ValueError("Runner hiện được cấu hình cho evaluator Gemini")
-    from google import genai
-    from ragas.embeddings import GoogleEmbeddings
     from ragas.llms import llm_factory
     from ragas.metrics.collections import (
         AnswerRelevancy,
@@ -65,9 +61,36 @@ async def build_metrics():
         Faithfulness,
     )
 
-    client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
-    judge = llm_factory(LLM_MODEL, provider="google", client=client)
-    embeddings = GoogleEmbeddings(client=client, model=EMBEDDING_MODEL)
+    provider = os.getenv("LLM_PROVIDER", "").lower()
+    embedding_provider = os.getenv("EMBEDDING_PROVIDER", provider).lower()
+
+    if provider == "gemini":
+        from google import genai
+        from ragas.embeddings import GoogleEmbeddings
+
+        client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+        judge = llm_factory(LLM_MODEL, provider="google", client=client)
+        embeddings = GoogleEmbeddings(client=client, model=EMBEDDING_MODEL)
+    elif provider == "openai":
+        from openai import AsyncOpenAI
+        from ragas.embeddings import OpenAIEmbeddings
+
+        # Ragas metric.ascore() cần async client cho cả judge lẫn embeddings.
+        client = AsyncOpenAI(api_key=os.environ["OPENAI_API_KEY"])
+        judge = llm_factory(LLM_MODEL, provider="openai", client=client)
+        if embedding_provider == "openai":
+            embeddings = OpenAIEmbeddings(client=client, model=EMBEDDING_MODEL)
+        else:
+            from google import genai
+            from ragas.embeddings import GoogleEmbeddings
+
+            gemini_client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+            embeddings = GoogleEmbeddings(client=gemini_client, model=EMBEDDING_MODEL)
+    else:
+        raise ValueError(
+            f"Evaluator chưa hỗ trợ LLM_PROVIDER={provider!r}; dùng openai hoặc gemini"
+        )
+
     return {
         "faithfulness": Faithfulness(llm=judge),
         "answer_relevance": AnswerRelevancy(llm=judge, embeddings=embeddings),
@@ -212,7 +235,7 @@ def write_report(rows: list[dict], dataset_size: int) -> None:
 
 ## Configurations
 
-- **Config A — dense-only:** Gemini embedding + cosine search, không BM25/RRF.
+- **Config A — dense-only:** embedding + cosine search, không BM25/RRF.
 - **Config B — hybrid + RRF:** dense và BM25, fusion RRF một lần; PageIndex khi dense score dưới threshold.
 
 Hai cấu hình dùng cùng golden dataset, generator, evaluator, prompt và `top_k`.

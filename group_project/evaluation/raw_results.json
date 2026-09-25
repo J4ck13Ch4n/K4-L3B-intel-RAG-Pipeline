@@ -1,0 +1,572 @@
+[
+  {
+    "case": 1,
+    "config": "dense-only",
+    "question": "Cổ Loa cách trung tâm Hà Nội khoảng bao xa?",
+    "expected_answer": "Cổ Loa cách trung tâm Hà Nội khoảng 20 km.",
+    "answer": "Cổ Loa cách trung tâm Hà Nội chừng 20km [S1].",
+    "source_ids": [
+      "news/article_01.md::chunk-16",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-105",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-443",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-217",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-88"
+    ],
+    "latency_seconds": 36.456,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.8592050730497277,
+    "context_recall": 1.0,
+    "context_precision": 0.9999999999
+  },
+  {
+    "case": 2,
+    "config": "dense-only",
+    "question": "Du khách có thể thưởng thức món địa phương nào khi đến Cổ Loa?",
+    "expected_answer": "Có thể thử bánh chưng Tày, bún Mạch Tràng xào cần và giò bó mo cau.",
+    "answer": "Du khách có thể thưởng thức món bánh chưng Tày và món bún Mạch Tràng xào cần khi đến Cổ Loa [S2].",
+    "source_ids": [
+      "news/article_01.md::chunk-14",
+      "news/article_01.md::chunk-16",
+      "news/article_01.md::chunk-7",
+      "news/article_01.md::chunk-12",
+      "news/article_01.md::chunk-1"
+    ],
+    "latency_seconds": 13.982,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.7467348982759606,
+    "context_recall": 1.0,
+    "context_precision": 0.49999999995
+  },
+  {
+    "case": 3,
+    "config": "dense-only",
+    "question": "Phát hiện khảo cổ nào giúp làm rõ truyền thuyết nỏ thần Cổ Loa?",
+    "expected_answer": "Lò đúc, khuôn đúc và mũi tên đồng ba cạnh được phát hiện qua các cuộc khai quật.",
+    "answer": "Phát hiện khảo cổ về mẫu vật tro than tại di tích Lò đúc đồng trong các đợt khai quật từ 2005 đến 2007 đã giúp làm rõ truyền thuyết nỏ thần Cổ Loa. Các mẫu vật này được giám định tại Đại học Arizona, cho thấy tuổi của thành Cổ Loa từ năm 159 trước Công nguyên [S4].",
+    "source_ids": [
+      "news/article_01.md::chunk-0",
+      "news/article_01.md::chunk-14",
+      "news/article_01.md::chunk-1",
+      "news/article_01.md::chunk-3",
+      "news/article_01.md::chunk-4"
+    ],
+    "latency_seconds": 47.277,
+    "faithfulness": 0.6666666666666666,
+    "answer_relevance": 0.4727190106197788,
+    "context_recall": 1.0,
+    "context_precision": 0.6791666666496875
+  },
+  {
+    "case": 4,
+    "config": "dense-only",
+    "question": "Phở Bát Đàn và Phở Thìn được bài viết giới thiệu ở địa chỉ nào?",
+    "expected_answer": "Phở Bát Đàn ở 49 Bát Đàn, Hoàn Kiếm; Phở Thìn ở 13 Lò Đúc, Hai Bà Trưng.",
+    "answer": "Phở Bát Đàn ở địa chỉ 49 Bát Đàn, quận Hoàn Kiếm và Phở Thìn ở địa chỉ 13 Lò Đúc, quận Hai Bà Trưng [S1].",
+    "source_ids": [
+      "news/article_02.md::chunk-4",
+      "news/article_02.md::chunk-2",
+      "news/article_02.md::chunk-5",
+      "news/article_02.md::chunk-1",
+      "news/article_02.md::chunk-3"
+    ],
+    "latency_seconds": 26.384,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.7924269179986906,
+    "context_recall": 1.0,
+    "context_precision": 0.9999999999
+  },
+  {
+    "case": 5,
+    "config": "dense-only",
+    "question": "Theo cẩm nang, linh hồn của phở bò Hà Nội là gì?",
+    "expected_answer": "Linh hồn của phở bò là nước dùng được ninh từ xương bò với các loại gia giảm.",
+    "answer": "Linh hồn của phở bò Hà Nội là nước dùng, được chế biến rất kỳ công, ninh từ xương bò với các loại gia giảm [S5].",
+    "source_ids": [
+      "news/article_02.md::chunk-3",
+      "news/article_02.md::chunk-2",
+      "news/article_02.md::chunk-0",
+      "news/article_02.md::chunk-4",
+      "news/article_02.md::chunk-1"
+    ],
+    "latency_seconds": 38.804,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.5636977120473546,
+    "context_recall": 1.0,
+    "context_precision": 0.4499999999775
+  },
+  {
+    "case": 6,
+    "config": "dense-only",
+    "question": "Nhà hát lớn Hà Nội được xây dựng và hoàn thành vào những năm nào?",
+    "expected_answer": "Công trình được xây dựng năm 1901 và hoàn thành năm 1911.",
+    "answer": "Nhà hát lớn Hà Nội được xây dựng năm 1901 và hoàn thành năm 1911 [S1].",
+    "source_ids": [
+      "news/article_03.md::chunk-1",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-434",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-14",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-449",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-356"
+    ],
+    "latency_seconds": 49.341,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.8444294095715247,
+    "context_recall": 1.0,
+    "context_precision": 0.9999999999
+  },
+  {
+    "case": 7,
+    "config": "dense-only",
+    "question": "Sự kiện lịch sử nào từng diễn ra tại Nhà hát lớn Hà Nội?",
+    "expected_answer": "Đây là nơi diễn ra cuộc họp đầu tiên của Quốc hội nước Việt Nam Dân chủ Cộng hòa.",
+    "answer": "Xin lỗi, thông tin về sự kiện lịch sử cụ thể từng diễn ra tại Nhà hát lớn Hà Nội không có trong dữ liệu được cung cấp.",
+    "source_ids": [
+      "news/article_03.md::chunk-1",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-359",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-363",
+      "legal/de-an-cong-nghiep-van-hoa-ha-noi-2025.md::chunk-5",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-449"
+    ],
+    "latency_seconds": 72.399,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.0,
+    "context_recall": 0.0,
+    "context_precision": 0.0
+  },
+  {
+    "case": 8,
+    "config": "dense-only",
+    "question": "Bài viết về kiến trúc Pháp cổ nhắc đến những công trình tiêu biểu nào?",
+    "expected_answer": "Bài viết nhắc đến Nhà hát lớn, Phủ Chủ tịch, Nhà thờ lớn, Bộ Ngoại giao, Cầu Long Biên và nhiều công trình khác.",
+    "answer": "Xin lỗi, không có thông tin cụ thể về các công trình kiến trúc Pháp cổ tiêu biểu trong bài viết được cung cấp [S1].",
+    "source_ids": [
+      "news/article_03.md::chunk-0",
+      "legal/quyet-dinh-76-2025-dinh-muc-du-lich-ha-noi.md::chunk-465",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-264",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-641",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-246"
+    ],
+    "latency_seconds": 34.011,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.0,
+    "context_recall": 0.0,
+    "context_precision": 0.0
+  },
+  {
+    "case": 9,
+    "config": "dense-only",
+    "question": "Du lịch xanh được mô tả như thế nào?",
+    "expected_answer": "Đó là du lịch có trách nhiệm, thân thiện với môi trường và tôn trọng các giá trị văn hóa, sinh thái.",
+    "answer": "Du lịch xanh tại Việt Nam được mô tả là một xu hướng phát triển bền vững, tập trung vào việc sử dụng các dịch vụ và sản phẩm thân thiện với môi trường. Khách du lịch có xu hướng chọn các khách sạn và khu du lịch có nhãn sinh thái [S1]. Việt Nam có nhiều điểm đến du lịch xanh hấp dẫn như Sơn La, Hà Giang, Lào Cai, Nghệ An, Quảng Nam và các tỉnh đồng bằng sông Cửu Long [S2].",
+    "source_ids": [
+      "news/article_04.md::chunk-6",
+      "news/article_04.md::chunk-7",
+      "news/article_04.md::chunk-5",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-112",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-109"
+    ],
+    "latency_seconds": 15.761,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.7344769279771683,
+    "context_recall": 1.0,
+    "context_precision": 0.8333333332916666
+  },
+  {
+    "case": 10,
+    "config": "dense-only",
+    "question": "Tuyến du lịch tự lái kết nối Việt Nam và Lào có lịch trình bao lâu và xuất phát từ đâu?",
+    "expected_answer": "Tuyến có lịch trình 7 ngày 6 đêm và xuất phát từ Khu di tích Hoàng thành Thăng Long.",
+    "answer": "Tuyến du lịch tự lái kết nối Việt Nam và Lào có lịch trình 7 ngày 6 đêm và xuất phát từ Khu di tích Hoàng thành Thăng Long (Hà Nội) [S1], [S5].",
+    "source_ids": [
+      "news/article_04.md::chunk-10",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-110",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-300",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-299",
+      "news/article_04.md::chunk-9"
+    ],
+    "latency_seconds": 43.828,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.600646149739313,
+    "context_recall": 1.0,
+    "context_precision": 0.0
+  },
+  {
+    "case": 11,
+    "config": "dense-only",
+    "question": "Có thể ngắm hoa bằng lăng ở những khu vực nào của Hà Nội?",
+    "expected_answer": "Có thể ngắm tại đường ven Hồ Tây, Kim Mã, Đào Tấn, Giải Phóng, Trần Thái Tông và quanh Hồ Hoàn Kiếm.",
+    "answer": "Bạn có thể ngắm hoa bằng lăng ở nhiều khu vực của Hà Nội như đường ven hồ Tây, phố Kim Mã, Đào Tấn, Giải Phóng, Trần Thái Tông và quanh khu vực hồ Hoàn Kiếm [S5].",
+    "source_ids": [
+      "news/article_05.md::chunk-4",
+      "news/article_05.md::chunk-3",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-363",
+      "news/article_05.md::chunk-1",
+      "news/article_05.md::chunk-2"
+    ],
+    "latency_seconds": 33.465,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.6542267298468485,
+    "context_recall": 1.0,
+    "context_precision": 0.19999999998
+  },
+  {
+    "case": 12,
+    "config": "dense-only",
+    "question": "Năm 2024 Hà Nội đón bao nhiêu lượt khách du lịch và khách quốc tế?",
+    "expected_answer": "Hà Nội đón 27,86 triệu lượt khách, trong đó 6,35 triệu lượt là khách quốc tế.",
+    "answer": "Năm 2024, Hà Nội đón 27,86 triệu lượt khách du lịch, trong đó có 6,35 triệu lượt khách quốc tế [S1].",
+    "source_ids": [
+      "legal/de-an-cong-nghiep-van-hoa-ha-noi-2025.md::chunk-10",
+      "news/article_04.md::chunk-12",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-29",
+      "legal/quyet-dinh-76-2025-dinh-muc-du-lich-ha-noi.md::chunk-334",
+      "legal/de-an-cong-nghiep-van-hoa-ha-noi-2025.md::chunk-9"
+    ],
+    "latency_seconds": 36.964,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.7738738888493618,
+    "context_recall": 1.0,
+    "context_precision": 0.9999999999
+  },
+  {
+    "case": 13,
+    "config": "dense-only",
+    "question": "Quy hoạch Thủ đô định hướng bốn trung tâm du lịch chính ở đâu?",
+    "expected_answer": "Bốn trung tâm gồm khu Hồ Hoàn Kiếm–Hồ Tây, Sóc Sơn, Ba Vì–Suối Hai và Hương Sơn.",
+    "answer": "Quy hoạch Thủ đô định hướng bốn trung tâm du lịch chính, trong đó có Trung tâm du lịch Thủ đô tại khu vực Hồ Hoàn Kiếm - Hồ Tây [S5].",
+    "source_ids": [
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-311",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-281",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-173",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-282",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-435"
+    ],
+    "latency_seconds": 34.997,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.45317276109358834,
+    "context_recall": 0.0,
+    "context_precision": 0.19999999998
+  },
+  {
+    "case": 14,
+    "config": "dense-only",
+    "question": "Trung tâm du lịch khu vực Hồ Hoàn Kiếm–Hồ Tây ưu tiên loại hình nào?",
+    "expected_answer": "Khu vực này ưu tiên du lịch văn hóa, di sản đô thị, kinh tế đêm và MICE.",
+    "answer": "Trung tâm du lịch khu vực Hồ Hoàn Kiếm–Hồ Tây ưu tiên khai thác các loại hình du lịch văn hóa, di sản đô thị và kinh tế đêm [S4].",
+    "source_ids": [
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-437",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-436",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-457",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-435",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-190"
+    ],
+    "latency_seconds": 29.369,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.5819657405660722,
+    "context_recall": 1.0,
+    "context_precision": 0.249999999975
+  },
+  {
+    "case": 15,
+    "config": "dense-only",
+    "question": "Định hướng du lịch cho khu vực Ba Vì–Suối Hai là gì?",
+    "expected_answer": "Ưu tiên du lịch tâm linh, sinh thái, nghỉ dưỡng núi, du lịch cộng đồng và chăm sóc sức khỏe gắn với Vườn quốc gia Ba Vì.",
+    "answer": "Định hướng du lịch cho khu vực Ba Vì–Suối Hai là phát triển du lịch tâm linh, sinh thái, nghỉ dưỡng núi, du lịch cộng đồng và chăm sóc sức khỏe gắn với Vườn quốc gia Ba Vì [S1].",
+    "source_ids": [
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-437",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-512",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-303",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-91",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-112"
+    ],
+    "latency_seconds": 39.262,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.72125471783364,
+    "context_recall": 1.0,
+    "context_precision": 0.6999999999766667
+  },
+  {
+    "case": 1,
+    "config": "hybrid + RRF",
+    "question": "Cổ Loa cách trung tâm Hà Nội khoảng bao xa?",
+    "expected_answer": "Cổ Loa cách trung tâm Hà Nội khoảng 20 km.",
+    "answer": "Cổ Loa cách trung tâm Hà Nội khoảng 20 km [S1].",
+    "source_ids": [
+      "news/article_01.md::chunk-16",
+      "news/article_01.md::chunk-7",
+      "news/article_01.md::chunk-14",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-105",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-88"
+    ],
+    "latency_seconds": 46.251,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.8885182569208029,
+    "context_recall": 1.0,
+    "context_precision": 0.9999999999
+  },
+  {
+    "case": 2,
+    "config": "hybrid + RRF",
+    "question": "Du khách có thể thưởng thức món địa phương nào khi đến Cổ Loa?",
+    "expected_answer": "Có thể thử bánh chưng Tày, bún Mạch Tràng xào cần và giò bó mo cau.",
+    "answer": "Du khách có thể thưởng thức món bánh chưng Tày, bún Mạch Tràng xào cần và giò bó mo cau khi đến Cổ Loa [S5].",
+    "source_ids": [
+      "news/article_01.md::chunk-14",
+      "news/article_01.md::chunk-1",
+      "news/article_01.md::chunk-0",
+      "news/article_02.md::chunk-4",
+      "news/article_01.md::chunk-16"
+    ],
+    "latency_seconds": 24.011,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.8045340716464128,
+    "context_recall": 1.0,
+    "context_precision": 0.19999999998
+  },
+  {
+    "case": 3,
+    "config": "hybrid + RRF",
+    "question": "Phát hiện khảo cổ nào giúp làm rõ truyền thuyết nỏ thần Cổ Loa?",
+    "expected_answer": "Lò đúc, khuôn đúc và mũi tên đồng ba cạnh được phát hiện qua các cuộc khai quật.",
+    "answer": "Phát hiện khảo cổ về mũi tên đồng ba cạnh đặc trưng của Cổ Loa giúp làm rõ truyền thuyết nỏ thần [S4].",
+    "source_ids": [
+      "news/article_01.md::chunk-0",
+      "news/article_01.md::chunk-1",
+      "news/article_01.md::chunk-3",
+      "news/article_01.md::chunk-14",
+      "news/article_01.md::chunk-4"
+    ],
+    "latency_seconds": 9.556,
+    "faithfulness": 0.5,
+    "answer_relevance": 0.41616855825863625,
+    "context_recall": 1.0,
+    "context_precision": 0.5333333333155555
+  },
+  {
+    "case": 4,
+    "config": "hybrid + RRF",
+    "question": "Phở Bát Đàn và Phở Thìn được bài viết giới thiệu ở địa chỉ nào?",
+    "expected_answer": "Phở Bát Đàn ở 49 Bát Đàn, Hoàn Kiếm; Phở Thìn ở 13 Lò Đúc, Hai Bà Trưng.",
+    "answer": "Phở Bát Đàn ở địa chỉ 49 Bát Đàn, quận Hoàn Kiếm và Phở Thìn ở địa chỉ 13 Lò Đúc, quận Hai Bà Trưng [S1].",
+    "source_ids": [
+      "news/article_02.md::chunk-4",
+      "news/article_02.md::chunk-2",
+      "news/article_02.md::chunk-5",
+      "news/article_02.md::chunk-1",
+      "news/article_02.md::chunk-3"
+    ],
+    "latency_seconds": 22.114,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.7924269179986906,
+    "context_recall": 1.0,
+    "context_precision": 0.9999999999
+  },
+  {
+    "case": 5,
+    "config": "hybrid + RRF",
+    "question": "Theo cẩm nang, linh hồn của phở bò Hà Nội là gì?",
+    "expected_answer": "Linh hồn của phở bò là nước dùng được ninh từ xương bò với các loại gia giảm.",
+    "answer": "Linh hồn của phở bò Hà Nội là nước dùng, được chế biến rất kỳ công, ninh từ xương bò với các loại gia giảm [S5].",
+    "source_ids": [
+      "news/article_02.md::chunk-3",
+      "news/article_02.md::chunk-2",
+      "news/article_02.md::chunk-0",
+      "news/article_02.md::chunk-4",
+      "news/article_02.md::chunk-1"
+    ],
+    "latency_seconds": 46.843,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.56370789899924,
+    "context_recall": 1.0,
+    "context_precision": 0.19999999998
+  },
+  {
+    "case": 6,
+    "config": "hybrid + RRF",
+    "question": "Nhà hát lớn Hà Nội được xây dựng và hoàn thành vào những năm nào?",
+    "expected_answer": "Công trình được xây dựng năm 1901 và hoàn thành năm 1911.",
+    "answer": "Nhà hát lớn Hà Nội được xây dựng vào năm 1901 và hoàn thành năm 1911 [S1].",
+    "source_ids": [
+      "news/article_03.md::chunk-1",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-356",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-434",
+      "legal/de-an-cong-nghiep-van-hoa-ha-noi-2025.md::chunk-11",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-449"
+    ],
+    "latency_seconds": 18.675,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.8444276783896076,
+    "context_recall": 1.0,
+    "context_precision": 0.9999999999
+  },
+  {
+    "case": 7,
+    "config": "hybrid + RRF",
+    "question": "Sự kiện lịch sử nào từng diễn ra tại Nhà hát lớn Hà Nội?",
+    "expected_answer": "Đây là nơi diễn ra cuộc họp đầu tiên của Quốc hội nước Việt Nam Dân chủ Cộng hòa.",
+    "answer": "Rất tiếc, thông tin về sự kiện lịch sử cụ thể từng diễn ra tại Nhà hát lớn Hà Nội không có trong các nguồn cung cấp.",
+    "source_ids": [
+      "news/article_03.md::chunk-1",
+      "legal/quyet-dinh-76-2025-dinh-muc-du-lich-ha-noi.md::chunk-371",
+      "legal/de-an-cong-nghiep-van-hoa-ha-noi-2025.md::chunk-5",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-359",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-449"
+    ],
+    "latency_seconds": 26.04,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.0,
+    "context_recall": 0.0,
+    "context_precision": 0.0
+  },
+  {
+    "case": 8,
+    "config": "hybrid + RRF",
+    "question": "Bài viết về kiến trúc Pháp cổ nhắc đến những công trình tiêu biểu nào?",
+    "expected_answer": "Bài viết nhắc đến Nhà hát lớn, Phủ Chủ tịch, Nhà thờ lớn, Bộ Ngoại giao, Cầu Long Biên và nhiều công trình khác.",
+    "answer": "Bài viết nhắc đến Nhà hát lớn Hà Nội, được xây dựng bởi người Pháp từ năm 1901 đến 1911 [S4].",
+    "source_ids": [
+      "news/article_03.md::chunk-0",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-246",
+      "legal/quyet-dinh-76-2025-dinh-muc-du-lich-ha-noi.md::chunk-465",
+      "news/article_03.md::chunk-1",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-641"
+    ],
+    "latency_seconds": 26.997,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.33397530235165185,
+    "context_recall": 0.0,
+    "context_precision": 0.0
+  },
+  {
+    "case": 9,
+    "config": "hybrid + RRF",
+    "question": "Du lịch xanh được mô tả như thế nào?",
+    "expected_answer": "Đó là du lịch có trách nhiệm, thân thiện với môi trường và tôn trọng các giá trị văn hóa, sinh thái.",
+    "answer": "Du lịch xanh tại Việt Nam được mô tả là một xu hướng phát triển bền vững, tập trung vào việc sử dụng các dịch vụ và hàng hóa có nhãn sinh thái, thân thiện với môi trường. Đây là giải pháp giúp thu hút khách du lịch có ý thức và hành xử văn minh, đồng thời tăng lượng khách có mức thu nhập cao [S2].",
+    "source_ids": [
+      "news/article_04.md::chunk-7",
+      "news/article_04.md::chunk-6",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-109",
+      "news/article_04.md::chunk-1",
+      "news/article_04.md::chunk-5"
+    ],
+    "latency_seconds": 30.205,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.7846043838749446,
+    "context_recall": 1.0,
+    "context_precision": 0.4499999999775
+  },
+  {
+    "case": 10,
+    "config": "hybrid + RRF",
+    "question": "Tuyến du lịch tự lái kết nối Việt Nam và Lào có lịch trình bao lâu và xuất phát từ đâu?",
+    "expected_answer": "Tuyến có lịch trình 7 ngày 6 đêm và xuất phát từ Khu di tích Hoàng thành Thăng Long.",
+    "answer": "Tuyến du lịch tự lái kết nối Việt Nam và Lào có lịch trình 7 ngày 6 đêm và xuất phát từ Khu di tích Hoàng thành Thăng Long, Hà Nội [S1], [S5].",
+    "source_ids": [
+      "news/article_04.md::chunk-10",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-299",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-110",
+      "news/article_04.md::chunk-8",
+      "news/article_04.md::chunk-9"
+    ],
+    "latency_seconds": 19.719,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.5921604629452784,
+    "context_recall": 1.0,
+    "context_precision": 0.0
+  },
+  {
+    "case": 11,
+    "config": "hybrid + RRF",
+    "question": "Có thể ngắm hoa bằng lăng ở những khu vực nào của Hà Nội?",
+    "expected_answer": "Có thể ngắm tại đường ven Hồ Tây, Kim Mã, Đào Tấn, Giải Phóng, Trần Thái Tông và quanh Hồ Hoàn Kiếm.",
+    "answer": "Bạn có thể ngắm hoa bằng lăng ở nhiều khu vực của Hà Nội như đường ven hồ Tây, phố Kim Mã, Đào Tấn, Giải Phóng, Trần Thái Tông và đặc biệt là quanh khu vực hồ Hoàn Kiếm [S5].",
+    "source_ids": [
+      "news/article_05.md::chunk-4",
+      "news/article_05.md::chunk-3",
+      "news/article_05.md::chunk-0",
+      "news/article_05.md::chunk-1",
+      "news/article_05.md::chunk-2"
+    ],
+    "latency_seconds": 36.11,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.7302633619585327,
+    "context_recall": 1.0,
+    "context_precision": 0.19999999998
+  },
+  {
+    "case": 12,
+    "config": "hybrid + RRF",
+    "question": "Năm 2024 Hà Nội đón bao nhiêu lượt khách du lịch và khách quốc tế?",
+    "expected_answer": "Hà Nội đón 27,86 triệu lượt khách, trong đó 6,35 triệu lượt là khách quốc tế.",
+    "answer": "Năm 2024, Hà Nội đón 27,86 triệu lượt khách du lịch, trong đó có 6,35 triệu lượt khách quốc tế [S1].",
+    "source_ids": [
+      "legal/de-an-cong-nghiep-van-hoa-ha-noi-2025.md::chunk-10",
+      "legal/quyet-dinh-76-2025-dinh-muc-du-lich-ha-noi.md::chunk-334",
+      "legal/quyet-dinh-76-2025-dinh-muc-du-lich-ha-noi.md::chunk-518",
+      "news/article_04.md::chunk-12",
+      "legal/de-an-cong-nghiep-van-hoa-ha-noi-2025.md::chunk-9"
+    ],
+    "latency_seconds": 25.534,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.7739046166312457,
+    "context_recall": 1.0,
+    "context_precision": 0.9999999999
+  },
+  {
+    "case": 13,
+    "config": "hybrid + RRF",
+    "question": "Quy hoạch Thủ đô định hướng bốn trung tâm du lịch chính ở đâu?",
+    "expected_answer": "Bốn trung tâm gồm khu Hồ Hoàn Kiếm–Hồ Tây, Sóc Sơn, Ba Vì–Suối Hai và Hương Sơn.",
+    "answer": "Quy hoạch Thủ đô Hà Nội định hướng bốn trung tâm du lịch chính, trong đó có:\n\n1. Trung tâm du lịch Thủ đô (Khu vực Hồ Hoàn Kiếm - Hồ Tây) [S1].",
+    "source_ids": [
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-435",
+      "news/article_04.md::chunk-12",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-84",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-311",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-173"
+    ],
+    "latency_seconds": 20.443,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.4285404602256999,
+    "context_recall": 0.0,
+    "context_precision": 0.9999999999
+  },
+  {
+    "case": 14,
+    "config": "hybrid + RRF",
+    "question": "Trung tâm du lịch khu vực Hồ Hoàn Kiếm–Hồ Tây ưu tiên loại hình nào?",
+    "expected_answer": "Khu vực này ưu tiên du lịch văn hóa, di sản đô thị, kinh tế đêm và MICE.",
+    "answer": "Trung tâm du lịch khu vực Hồ Hoàn Kiếm–Hồ Tây ưu tiên khai thác các loại hình du lịch văn hóa, di sản đô thị và kinh tế đêm. Ngoài ra, phát triển mạnh loại hình du lịch MICE (du lịch kết hợp hội nghị, hội thảo, triển lãm) [S5].",
+    "source_ids": [
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-437",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-457",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-439",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-190",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-435"
+    ],
+    "latency_seconds": 31.858,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.5819657405660722,
+    "context_recall": 1.0,
+    "context_precision": 0.19999999998
+  },
+  {
+    "case": 15,
+    "config": "hybrid + RRF",
+    "question": "Định hướng du lịch cho khu vực Ba Vì–Suối Hai là gì?",
+    "expected_answer": "Ưu tiên du lịch tâm linh, sinh thái, nghỉ dưỡng núi, du lịch cộng đồng và chăm sóc sức khỏe gắn với Vườn quốc gia Ba Vì.",
+    "answer": "Định hướng du lịch cho khu vực Ba Vì–Suối Hai là phát triển du lịch tâm linh, sinh thái, nghỉ dưỡng núi, du lịch cộng đồng và chăm sóc sức khỏe gắn với Vườn quốc gia Ba Vì [S1].",
+    "source_ids": [
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-437",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-213",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-91",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-512",
+      "legal/quy-hoach-thu-do-ha-noi-2026.md::chunk-112"
+    ],
+    "latency_seconds": 28.039,
+    "faithfulness": 1.0,
+    "answer_relevance": 0.72125471783364,
+    "context_recall": 1.0,
+    "context_precision": 0.8666666666377778
+  }
+]

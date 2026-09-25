@@ -55,3 +55,6 @@ pageindex_pdfs/
 # OS
 .DS_Store
 Thumbs.db
+
+# Vector store (regenerate via task4)
+chroma_db/
