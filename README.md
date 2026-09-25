@@ -1,10 +1,18 @@
-# Day 8 — RAG Pipeline
+# Hà Nội Travel Assistant — RAG Pipeline
 
 ## Mục tiêu
 
-Mỗi nhóm xây dựng một chatbot RAG trả lời câu hỏi từ bộ tài liệu do nhóm thu thập. Sản phẩm phải có hybrid retrieval, citation, giao diện chat và báo cáo đánh giá.
+Chatbot RAG tiếng Việt trả lời câu hỏi về điểm đến, di sản, ẩm thực và định hướng phát triển du lịch Hà Nội. Sản phẩm dùng hybrid retrieval, citation và giao diện Streamlit.
 
-Nhóm tự chọn bài toán và thu thập dữ liệu phù hợp; repo không cung cấp dữ liệu mẫu.
+Corpus hiện gồm ba văn bản chính thức của Thành phố Hà Nội và năm bài cẩm nang từ Sở Du lịch Hà Nội. Mỗi câu trả lời chỉ được xác nhận khi có citation `[S1]`, `[S2]` đối chiếu được với nguồn hiển thị trên giao diện.
+
+## Phạm vi câu hỏi
+
+- Điểm đến và di sản: Cổ Loa, khu vực trung tâm, các công trình kiến trúc Pháp.
+- Ẩm thực: phở Hà Nội và các địa chỉ được nguồn công khai giới thiệu.
+- Trải nghiệm theo mùa và du lịch xanh.
+- Quy hoạch, định hướng và dịch vụ quảng bá du lịch Hà Nội.
+- Câu hỏi ngoài corpus được trả lời bằng safe refusal, không suy đoán.
 
 ## Sản phẩm phải nộp
 
@@ -14,7 +22,7 @@ Nhóm tự chọn bài toán và thu thập dữ liệu phù hợp; repo không 
 - Chatbot Streamlit hiển thị câu trả lời và nguồn đã dùng.
 - Golden dataset tối thiểu 15 câu; đánh giá 4 metric và so sánh A/B.
 - `group_project/evaluation/RESULT.md`.
-- Mỗi thành viên nộp báo cáo cá nhân theo template trong `group_project/ịndividual/INDIVIDUAL_REPORT.md`.
+- Mỗi thành viên nộp báo cáo cá nhân theo template trong `reports/INDIVIDUAL_REPORT.md`.
 
 ## Quick start
 
@@ -27,7 +35,7 @@ python -m playwright install chromium
 cp .env.example .env
 ```
 
-Điền API key cần dùng trong `.env`; không commit file này.
+Điền API key và model cần dùng trong `.env`; không commit file này. Cấu hình đã được kiểm thử với Gemini cho generation và embedding. Chỉ đặt `ALLOW_INSECURE_SSL=1` khi máy gặp lỗi chuỗi chứng chỉ với website nguồn.
 
 ```bash
 # 1. Thu thập và chuẩn hoá
@@ -67,7 +75,7 @@ streamlit run app.py
 - [Module contracts](docs/MODULE_CONTRACTS.md): schema, interface và invariant mà code/test nên tuân theo.
 - [Step-by-step guide](docs/STEP_BY_STEP.md): thứ tự triển khai và tiêu chí hoàn thành từng bước.
 - [Grading rubric](docs/GRADING_RUBRIC.md): Rubric thang điểm.
-- [Individual report](group_project/ịndividual/INDIVIDUAL_REPORT.md): template báo cáo cá nhân.
+- [Individual report](reports/INDIVIDUAL_REPORT.md): template báo cáo cá nhân.
 - [Suggested topics](docs/SUGGESTED_TOPICS.md): danh sách chủ đề tham khảo, không bắt buộc.
 
 ## Kiểm tra

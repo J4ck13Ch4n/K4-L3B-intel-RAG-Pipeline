@@ -1,0 +1,69 @@
+---
+source: "article_05.json"
+title: "Có một sắc tím như ùa vào lòng phố Hà Nội trong những ngày tháng 5 - Sở Du Lịch Hà Nội"
+doc_type: "news"
+url: "https://sodulich.hanoi.gov.vn/co-mot-sac-tim-nhu-ua-vao-long-pho-ha-noi-trong-nhung-ngay-thang-5.html"
+date_crawled: "2026-09-25T03:01:54.226658+00:00"
+---
+
+# Có một sắc tím như ùa vào lòng phố Hà Nội trong những ngày tháng 5 - Sở Du Lịch Hà Nội
+
+# Có một sắc tím như ùa vào lòng phố Hà Nội trong những ngày tháng 5
+
+Những ngày đầu tháng 5 trên khắp các tuyến phố của Hà Nội, hoa bằng lăng đã nở rộ báo hiệu một mùa hè đang về. Hàng cây bằng lăng trải dài, nở hoa tím biếc như giảm bớt cái nắng gay gắt.
+
+Hoa bằng lăng có nguồn gốc từ Ấn Độ, hiện có nhiều ở các nước Đông Nam Á, trong đó có Việt Nam. Do có màu đẹp nên nhiều tỉnh thành của Việt Nam trồng loại hoa này để che bóng mát và làm đẹp cảnh quan đô thị.
+
+Tháp rùa bên sắc tím của bằng lăng và sắc đỏ của hoa phượng báo hiệu mùa hè về.
+
+Màu tím thuỷ chung của hoa bằng lăng cũng gắn liền với năm tháng tuổi thơ của biết bao nhiêu thế hệ học trò.
+
+Hoa bằng lăng có màu tím đậm hoặc tím nhạt, kết thành từng chùm đẹp mắt. Mỗi bông hoa có 6 cánh, khi nở thường xoè rộng, cánh hoa mỏng nhẹ như giấy.
+
+Hoa bằng lăng đến nhanh nhưng cũng chóng tàn, chỉ sau vài cơn mưa mùa hạ những cánh hoa đã nhạt màu rồi rụng dần.
+
+Có khá nhiều đường phố Hà Nội trồng loại cây này, tiêu biểu như đường ven hồ Tây, phố Kim Mã, Đào Tấn, Giải Phóng, Trần Thái Tông,… Đặc biệt quanh khu vực hồ Hoàn Kiếm có rất nhiều cây bằng lăng đã bung nở khoe sắc.
+
+Hoa bằng lăng nở ngợp trời Hà Nội, mang sắc tím trải dài trên nhiều con phố vẽ nên một bức tranh vô cùng thơ mộng, yên bình.
+
+Đặc biệt, hàng cây bằng lăng nở rộ trên vỉa hè, dọc hồ Hoàng Cầu đang thu hút rất nhiều các bạn trẻ, đặc biệt các “nàng thơ” tìm đến thả dáng, chụp ảnh.
+
+Thiếu nữ dịu dàng thả dáng bên những bông hoa bằng lăng đang nở rộ.
+
+Các bạn trẻ ở đây cho biết, hàng cây ở đây nở rất đẹp, hoa rất dày và thấp nên dễ chụp ảnh. Qua mạng xã hội mọi người biết để tìm đến.
+
+Bằng lăng được người Hà Nội coi là loài hoa báo hè vì khi nhìn thấy hoa bằng lăng là biết mùa hè đã thực sự tới.
+
+Sắc tím bằng lăng khiến khung cảnh ở đây trở nên sinh động, đẹp mắt hơn.
+
+Nhiều cây bằng lăng hoa nở dày đặc, phủ kín cả cây “che” hết màu xanh của lá.
+
+Trên nhiều con đường của Thủ đô hoa bằng lăng tím nở rộ, những chùm hoa tím ngắt trên nền trời trong xanh khiến ai đi qua cũng không khỏi xao xuyến và dừng chân ngắm nhìn. Sắc tím như đang ùa vào lòng phố…
+
+Cùng vời bằng lăng, thời điểm này hoa phượng vĩ cũng bắt đầu nở rộ.
+
+Nguồn: https://toquoc.vn/co-mot-sac-tim-nhu-ua-vao-long-pho-ha-noi-trong-nhung-ngay-thang-5-20240512105001032.htm
+
+Tin tức du lịch Hà Nội
+
+### Thúc đẩy hợp tác thương mại, đầu tư và du lịch giữa Hà Nội và các đối tác Pháp
+
+Hội nghị Xúc tiến thương mại và du lịch Hà Nội-Pháp năm 2026 tạo diễn đàn kết nối giữa các cơ quan, hiệp hội và doanh nghiệp hai bên, góp phần thúc đẩy hợp tác thương mại, đầu tư và du lịch trong bối cảnh quan hệ Việt Nam-Pháp tiếp tục phát triển và mở ra nhiều […]
+
+### Hà Nội quảng bá tiềm năng đầu tư, du lịch tới cộng đồng doanh nghiệp Pháp
+
+Hội nghị Xúc tiến Thương mại và Du lịch Hà Nội-Pháp 2026 tại Paris đã tạo diễn đàn kết nối nhằm mở rộng hợp tác trong các lĩnh vực thương mại, đầu tư và thu hút khách du lịch Pháp đến Hà Nội. Ngày 4/8 tại Paris, Hội nghị Xúc tiến Thương mại và Du lịch Hà Nội-Pháp 2026 […]
+
+### Hà Nội tăng cường quản lý hoạt động lữ hành
+
+Sở Du lịch Hà Nội vừa có văn bản đề nghị các doanh nghiệp kinh doanh dịch vụ lữ hành trên địa bàn Thủ đô nghiêm túc thực hiện các quy định của pháp luật, bảo đảm môi trường du lịch minh bạch, an toàn và phát triển bền vững. 04/08/2026 17:21 Prefer Nhan Dan on Google […]
+
+### Sở Du lịch thành phố Hà Nội thông báo tổ chức Khóa 7 cập nhật kiến thức cho hướng dẫn viên du lịch năm 2026
+
+Triển khai Kế hoạch số 15/KH-SDL ngày 22/01/2026 về tổ chức các khóa cập nhật kiến thức cho hướng dẫn viên du lịch, đồng thời góp phần nâng cao chất lượng nguồn nhân lực du lịch Thủ đô, Sở Du lịch Hà Nội thông báo tổ chức Khóa 7 cập nhật kiến thức cho hướng […]
+
+### Chuỗi hoạt động tháng 8/2026 tại Làng Văn hóa – Du lịch các dân tộc Việt Nam: “Về miền Tây qua nét văn hóa của đồng bào Khmer”
+
+Nhằm giới thiệu, quảng bá những giá trị văn hóa đặc sắc của cộng đồng các dân tộc Việt Nam, đồng thời mang đến cho người dân và du khách những trải nghiệm văn hóa hấp dẫn trong dịp hè, từ ngày 01 đến 28/8/2026, Làng Văn hóa – Du lịch các dân tộc Việt […]
+
+## Trải nghiệm Hà Nội - theo cách của bạn

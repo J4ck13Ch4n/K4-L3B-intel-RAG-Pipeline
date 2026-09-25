@@ -1,0 +1,37 @@
+---
+source: "article_03.json"
+title: "Vẻ đẹp những công trình kiến trúc Pháp cổ tiêu biểu tại Hà Nội - Sở Du Lịch Hà Nội"
+doc_type: "news"
+url: "https://sodulich.hanoi.gov.vn/ve-dep-nhung-cong-trinh-kien-truc-phap-co-tieu-bieu-tai-ha-noi.html"
+date_crawled: "2026-09-25T03:01:52.586254+00:00"
+---
+
+# Vẻ đẹp những công trình kiến trúc Pháp cổ tiêu biểu tại Hà Nội - Sở Du Lịch Hà Nội
+
+# Vẻ đẹp những công trình kiến trúc Pháp cổ tiêu biểu tại Hà Nội
+
+Nhà hát lớn Hà Nội (phường Tràng Tiền, Hoàn Kiếm, Hà Nội) là công trình được người Pháp xây dựng năm 1901, hoàn thành năm 1911 do hai kiến trúc sư là Harlay và Broyer thiết kế. Đây là công trình mang nhiều màu sắc, đường nét kiến trúc của các nhà hát ở miền Nam nước Pháp, có cách tổ chức mặt bằng, không gian biểu diễn, cầu thang, lối vào sảnh… giống với các nhà hát ở châu Âu đầu thế kỷ XX. Nhà hát lớn là công trình biểu diễn lớn nhất khu vực Đông Nam Á lúc bấy giờ. Không chỉ có giá trị về mặt thẩm mỹ và kiến trúc, công trình còn có giá trị lịch sử. Đây là nơi diễn ra cuộc họp đầu tiên của Quốc hội nhà nước Việt Nam Dân chủ Cộng hòa.
+
+Tin tức du lịch Hà Nội
+
+### Thúc đẩy hợp tác thương mại, đầu tư và du lịch giữa Hà Nội và các đối tác Pháp
+
+Hội nghị Xúc tiến thương mại và du lịch Hà Nội-Pháp năm 2026 tạo diễn đàn kết nối giữa các cơ quan, hiệp hội và doanh nghiệp hai bên, góp phần thúc đẩy hợp tác thương mại, đầu tư và du lịch trong bối cảnh quan hệ Việt Nam-Pháp tiếp tục phát triển và mở ra nhiều […]
+
+### Hà Nội quảng bá tiềm năng đầu tư, du lịch tới cộng đồng doanh nghiệp Pháp
+
+Hội nghị Xúc tiến Thương mại và Du lịch Hà Nội-Pháp 2026 tại Paris đã tạo diễn đàn kết nối nhằm mở rộng hợp tác trong các lĩnh vực thương mại, đầu tư và thu hút khách du lịch Pháp đến Hà Nội. Ngày 4/8 tại Paris, Hội nghị Xúc tiến Thương mại và Du lịch Hà Nội-Pháp 2026 […]
+
+### Hà Nội tăng cường quản lý hoạt động lữ hành
+
+Sở Du lịch Hà Nội vừa có văn bản đề nghị các doanh nghiệp kinh doanh dịch vụ lữ hành trên địa bàn Thủ đô nghiêm túc thực hiện các quy định của pháp luật, bảo đảm môi trường du lịch minh bạch, an toàn và phát triển bền vững. 04/08/2026 17:21 Prefer Nhan Dan on Google […]
+
+### Sở Du lịch thành phố Hà Nội thông báo tổ chức Khóa 7 cập nhật kiến thức cho hướng dẫn viên du lịch năm 2026
+
+Triển khai Kế hoạch số 15/KH-SDL ngày 22/01/2026 về tổ chức các khóa cập nhật kiến thức cho hướng dẫn viên du lịch, đồng thời góp phần nâng cao chất lượng nguồn nhân lực du lịch Thủ đô, Sở Du lịch Hà Nội thông báo tổ chức Khóa 7 cập nhật kiến thức cho hướng […]
+
+### Chuỗi hoạt động tháng 8/2026 tại Làng Văn hóa – Du lịch các dân tộc Việt Nam: “Về miền Tây qua nét văn hóa của đồng bào Khmer”
+
+Nhằm giới thiệu, quảng bá những giá trị văn hóa đặc sắc của cộng đồng các dân tộc Việt Nam, đồng thời mang đến cho người dân và du khách những trải nghiệm văn hóa hấp dẫn trong dịp hè, từ ngày 01 đến 28/8/2026, Làng Văn hóa – Du lịch các dân tộc Việt […]
+
+## Trải nghiệm Hà Nội - theo cách của bạn

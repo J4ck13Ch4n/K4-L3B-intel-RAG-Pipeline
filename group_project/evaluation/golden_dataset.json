@@ -1,0 +1,77 @@
+[
+  {
+    "question": "Cổ Loa cách trung tâm Hà Nội khoảng bao xa?",
+    "expected_answer": "Cổ Loa cách trung tâm Hà Nội khoảng 20 km.",
+    "expected_context": "Chỉ cách trung tâm Hà Nội chừng 20km, giao thông thuận lợi."
+  },
+  {
+    "question": "Du khách có thể thưởng thức món địa phương nào khi đến Cổ Loa?",
+    "expected_answer": "Có thể thử bánh chưng Tày, bún Mạch Tràng xào cần và giò bó mo cau.",
+    "expected_context": "Thưởng thức món bánh chưng Tày, bún Mạch Tràng xào cần, món giò bó mo cau."
+  },
+  {
+    "question": "Phát hiện khảo cổ nào giúp làm rõ truyền thuyết nỏ thần Cổ Loa?",
+    "expected_answer": "Lò đúc, khuôn đúc và mũi tên đồng ba cạnh được phát hiện qua các cuộc khai quật.",
+    "expected_context": "Di tích Lò đúc mũi tên đồng cùng các khuôn đúc mũi tên ba cạnh được phát hiện."
+  },
+  {
+    "question": "Phở Bát Đàn và Phở Thìn được bài viết giới thiệu ở địa chỉ nào?",
+    "expected_answer": "Phở Bát Đàn ở 49 Bát Đàn, Hoàn Kiếm; Phở Thìn ở 13 Lò Đúc, Hai Bà Trưng.",
+    "expected_context": "Phở Bát Đàn: 49 Bát Đàn; Phở Thìn: 13 Lò Đúc."
+  },
+  {
+    "question": "Theo cẩm nang, linh hồn của phở bò Hà Nội là gì?",
+    "expected_answer": "Linh hồn của phở bò là nước dùng được ninh từ xương bò với các loại gia giảm.",
+    "expected_context": "Linh hồn của phở bò là nước dùng, được chế biến rất kỳ công, ninh từ xương bò."
+  },
+  {
+    "question": "Nhà hát lớn Hà Nội được xây dựng và hoàn thành vào những năm nào?",
+    "expected_answer": "Công trình được xây dựng năm 1901 và hoàn thành năm 1911.",
+    "expected_context": "Nhà hát lớn Hà Nội là công trình được người Pháp xây dựng năm 1901, hoàn thành năm 1911."
+  },
+  {
+    "question": "Sự kiện lịch sử nào từng diễn ra tại Nhà hát lớn Hà Nội?",
+    "expected_answer": "Đây là nơi diễn ra cuộc họp đầu tiên của Quốc hội nước Việt Nam Dân chủ Cộng hòa.",
+    "expected_context": "Đây là nơi diễn ra cuộc họp đầu tiên của Quốc hội nhà nước Việt Nam Dân chủ Cộng hòa."
+  },
+  {
+    "question": "Bài viết về kiến trúc Pháp cổ nhắc đến những công trình tiêu biểu nào?",
+    "expected_answer": "Bài viết nhắc đến Nhà hát lớn, Phủ Chủ tịch, Nhà thờ lớn, Bộ Ngoại giao, Cầu Long Biên và nhiều công trình khác.",
+    "expected_context": "Nhà hát lớn Hà Nội, Phủ Chủ tịch, Nhà thờ lớn Hà Nội, Bộ Ngoại giao, Cầu Long Biên."
+  },
+  {
+    "question": "Du lịch xanh được mô tả như thế nào?",
+    "expected_answer": "Đó là du lịch có trách nhiệm, thân thiện với môi trường và tôn trọng các giá trị văn hóa, sinh thái.",
+    "expected_context": "Du lịch xanh, du lịch có trách nhiệm, thân thiện với môi trường tiếp tục là xu hướng nổi bật."
+  },
+  {
+    "question": "Tuyến du lịch tự lái kết nối Việt Nam và Lào có lịch trình bao lâu và xuất phát từ đâu?",
+    "expected_answer": "Tuyến có lịch trình 7 ngày 6 đêm và xuất phát từ Khu di tích Hoàng thành Thăng Long.",
+    "expected_context": "Lộ trình 7 ngày 6 đêm, xuất phát từ Khu di tích Hoàng thành Thăng Long."
+  },
+  {
+    "question": "Có thể ngắm hoa bằng lăng ở những khu vực nào của Hà Nội?",
+    "expected_answer": "Có thể ngắm tại đường ven Hồ Tây, Kim Mã, Đào Tấn, Giải Phóng, Trần Thái Tông và quanh Hồ Hoàn Kiếm.",
+    "expected_context": "Đường ven hồ Tây, phố Kim Mã, Đào Tấn, Giải Phóng, Trần Thái Tông và khu vực hồ Hoàn Kiếm."
+  },
+  {
+    "question": "Năm 2024 Hà Nội đón bao nhiêu lượt khách du lịch và khách quốc tế?",
+    "expected_answer": "Hà Nội đón 27,86 triệu lượt khách, trong đó 6,35 triệu lượt là khách quốc tế.",
+    "expected_context": "Năm 2024 Hà Nội đón 27,86 triệu lượt khách du lịch, trong đó khách quốc tế là 6,35 triệu lượt."
+  },
+  {
+    "question": "Quy hoạch Thủ đô định hướng bốn trung tâm du lịch chính ở đâu?",
+    "expected_answer": "Bốn trung tâm gồm khu Hồ Hoàn Kiếm–Hồ Tây, Sóc Sơn, Ba Vì–Suối Hai và Hương Sơn.",
+    "expected_context": "Trung tâm du lịch Thủ đô; phía Bắc Sóc Sơn; phía Tây Ba Vì–Suối Hai; phía Nam Hương Sơn."
+  },
+  {
+    "question": "Trung tâm du lịch khu vực Hồ Hoàn Kiếm–Hồ Tây ưu tiên loại hình nào?",
+    "expected_answer": "Khu vực này ưu tiên du lịch văn hóa, di sản đô thị, kinh tế đêm và MICE.",
+    "expected_context": "Trọng tâm khai thác du lịch văn hóa, di sản đô thị, kinh tế đêm và phát triển MICE."
+  },
+  {
+    "question": "Định hướng du lịch cho khu vực Ba Vì–Suối Hai là gì?",
+    "expected_answer": "Ưu tiên du lịch tâm linh, sinh thái, nghỉ dưỡng núi, du lịch cộng đồng và chăm sóc sức khỏe gắn với Vườn quốc gia Ba Vì.",
+    "expected_context": "Ưu tiên phát triển du lịch tâm linh, sinh thái, nghỉ dưỡng núi, du lịch cộng đồng và chăm sóc sức khỏe."
+  }
+]

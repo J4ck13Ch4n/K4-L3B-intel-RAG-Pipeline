@@ -15,31 +15,118 @@ Cài browser trước khi chạy:
 
 import asyncio
 import json
+import os
+import re
+from datetime import datetime, timezone
+from html.parser import HTMLParser
 from pathlib import Path
+
+import requests
 
 
 DATA_DIR = Path(__file__).parent.parent / "data" / "landing" / "news"
 
 ARTICLE_URLS = [
-    # TODO: Thêm ít nhất 5 public URL.
+    "https://sodulich.hanoi.gov.vn/ve-mien-huyen-tich-co-loa.html",
+    "https://sodulich.hanoi.gov.vn/pho-ha-noi.html",
+    "https://sodulich.hanoi.gov.vn/ve-dep-nhung-cong-trinh-kien-truc-phap-co-tieu-bieu-tai-ha-noi.html",
+    "https://sodulich.hanoi.gov.vn/nhung-xu-huong-du-lich-moi-noi-tai-viet-nam.html",
+    "https://sodulich.hanoi.gov.vn/co-mot-sac-tim-nhu-ua-vao-long-pho-ha-noi-trong-nhung-ngay-thang-5.html",
 ]
 
 
+class ArticleParser(HTMLParser):
+    """Trích title và nội dung đọc được mà không phụ thuộc CSS của website."""
+
+    BLOCK_TAGS = {"h1", "h2", "h3", "p", "li"}
+    IGNORED_TAGS = {"script", "style", "svg", "nav", "footer", "form"}
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.title = ""
+        self._title_parts: list[str] = []
+        self._current_tag = ""
+        self._current_parts: list[str] = []
+        self._ignored_depth = 0
+        self.blocks: list[tuple[str, str]] = []
+
+    def handle_starttag(self, tag: str, attrs) -> None:
+        tag = tag.lower()
+        if tag in self.IGNORED_TAGS:
+            self._ignored_depth += 1
+        if not self._ignored_depth and tag in self.BLOCK_TAGS:
+            self._current_tag = tag
+            self._current_parts = []
+        if tag == "title":
+            self._title_parts = []
+
+    def handle_endtag(self, tag: str) -> None:
+        tag = tag.lower()
+        if tag == "title" and self._title_parts:
+            self.title = " ".join(self._title_parts).strip()
+        if not self._ignored_depth and tag == self._current_tag:
+            text = re.sub(r"\s+", " ", " ".join(self._current_parts)).strip()
+            if len(text) >= 20:
+                self.blocks.append((tag, text))
+            self._current_tag = ""
+            self._current_parts = []
+        if tag in self.IGNORED_TAGS and self._ignored_depth:
+            self._ignored_depth -= 1
+
+    def handle_data(self, data: str) -> None:
+        if self._ignored_depth:
+            return
+        text = data.strip()
+        if not text:
+            return
+        if self._current_tag:
+            self._current_parts.append(text)
+        self._title_parts.append(text)
+
+    def as_markdown(self) -> str:
+        seen: set[str] = set()
+        lines: list[str] = []
+        for tag, text in self.blocks:
+            key = text.casefold()
+            if key in seen:
+                continue
+            seen.add(key)
+            if tag.startswith("h"):
+                level = min(int(tag[1]), 3)
+                lines.append(f"{'#' * level} {text}")
+            elif tag == "li":
+                lines.append(f"- {text}")
+            else:
+                lines.append(text)
+        return "\n\n".join(lines)
+
+
+def _crawl_article_sync(url: str) -> dict:
+    response = requests.get(
+        url,
+        headers={"User-Agent": "HanoiTourismRAG/1.0 (educational project)"},
+        timeout=45,
+        verify=os.getenv("ALLOW_INSECURE_SSL", "0") != "1",
+    )
+    response.raise_for_status()
+    response.encoding = response.apparent_encoding or "utf-8"
+
+    parser = ArticleParser()
+    parser.feed(response.text)
+    markdown = parser.as_markdown()
+    if len(markdown) < 200:
+        raise ValueError(f"Không trích được đủ nội dung từ {url}")
+    return {
+        "url": url,
+        "title": parser.title or url.rsplit("/", 1)[-1].removesuffix(".html"),
+        "date_crawled": datetime.now(timezone.utc).isoformat(),
+        "content_markdown": markdown,
+    }
+
+
 async def crawl_article(url: str) -> dict:
-    # TODO: Implement crawling logic.
-    #
-    # from datetime import datetime
-    # from crawl4ai import AsyncWebCrawler
-    #
-    # async with AsyncWebCrawler() as crawler:
-    #     result = await crawler.arun(url=url)
-    #     return {
-    #         "url": url,
-    #         "title": result.metadata.get("title", "Unknown"),
-    #         "date_crawled": datetime.now().isoformat(),
-    #         "content_markdown": result.markdown,
-    #     }
-    raise NotImplementedError("Implement crawl_article")
+    """Crawl một bài mà không chặn event loop."""
+    return await asyncio.to_thread(_crawl_article_sync, url)
 
 
 async def crawl_all() -> None:
